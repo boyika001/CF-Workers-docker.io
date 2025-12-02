@@ -443,7 +443,8 @@ export default {
 		console.log(`域名头部: ${hostTop} 反代地址: ${hub_host} searchInterface: ${fakePage}`);
 		// 更改请求的主机名
 		url.hostname = hub_host;
-		const hubParams = ['/v1/search', '/v1/repositories'];
+		// const hubParams = ['/v1/search', '/v1/repositories'];  update 
+		const hubParams = ['/search', '/repositories'];
 		if (屏蔽爬虫UA.some(fxxk => userAgent.includes(fxxk)) && 屏蔽爬虫UA.length > 0) {
 			// 首页改成一个nginx伪装页
 			return new Response(await nginx(), {
@@ -473,7 +474,7 @@ export default {
 				}
 			} else {
 				// 新增逻辑：/v1/ 路径特殊处理
-				if (url.pathname.startsWith('/v1/')) {
+				if (url.pathname.startsWith('/search/') || url.pathname.startsWith('/repositories/')) {
 					url.hostname = 'index.docker.io';
 				} else if (fakePage) {
 					url.hostname = 'hub.docker.com';
