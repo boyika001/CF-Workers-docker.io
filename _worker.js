@@ -452,7 +452,7 @@ export default {
 					'Content-Type': 'text/html; charset=UTF-8',
 				},
 			});
-		} else if ((userAgent && userAgent.includes('mozilla')) || hubParams.some(param => url.pathname.includes(param))) {
+		} else if ((userAgent && userAgent.includes('mozilla')) ) {
 			if (url.pathname == '/') {
 				if (env.URL302) {
 					return Response.redirect(env.URL302, 302);
@@ -474,11 +474,10 @@ export default {
 				}
 			} else {
 				// 新增逻辑：/v1/ 路径特殊处理
-				if (url.pathname.startsWith('/search/') || url.pathname.startsWith('/repositories/')) {
-					url.hostname = 'index.docker.io';
-				} else if (fakePage) {
-					url.hostname = 'hub.docker.com';
-				}
+				// 只处理fakePage情况
+		        if (fakePage) {
+		            url.hostname = 'hub.docker.com';
+		        }
 				if (url.searchParams.get('q')?.includes('library/') && url.searchParams.get('q') != 'library/') {
 					const search = url.searchParams.get('q');
 					url.searchParams.set('q', search.replace('library/', ''));
