@@ -31,7 +31,6 @@ function routeByHosts(host) {
 
 /** @type {RequestInit} */
 const PREFLIGHT_INIT = {
-	console.log('PREFLIGHT_INIT');
 	// 预检请求配置
 	headers: new Headers({
 		'access-control-allow-origin': '*', // 允许所有来源
