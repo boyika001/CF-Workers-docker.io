@@ -1,4 +1,4 @@
-name = "dockerhub-proxy"
+name = "dockerfastone"
 main = "_worker.js"  # 或您的入口文件路径
 compatibility_date = "2025-12-02"
 
