@@ -9,6 +9,7 @@ let 屏蔽爬虫UA = ['netcraft'];
 
 // 根据主机名选择对应的上游地址
 function routeByHosts(host) {
+	console.log('routeByHosts');
 	// 定义路由表
 	const routes = {
 		// 生产环境
@@ -30,6 +31,7 @@ function routeByHosts(host) {
 
 /** @type {RequestInit} */
 const PREFLIGHT_INIT = {
+	console.log('PREFLIGHT_INIT');
 	// 预检请求配置
 	headers: new Headers({
 		'access-control-allow-origin': '*', // 允许所有来源
@@ -45,6 +47,7 @@ const PREFLIGHT_INIT = {
  * @param {Object<string, string>} headers 响应头
  */
 function makeRes(body, status = 200, headers = {}) {
+	console.log('makeRes');
 	headers['access-control-allow-origin'] = '*' // 允许所有来源
 	return new Response(body, { status, headers }) // 返回新构造的响应
 }
@@ -65,6 +68,7 @@ function newUrl(urlStr, base) {
 }
 
 async function nginx() {
+	console.log('nginx');
 	const text = `
 	<!DOCTYPE html>
 	<html>
@@ -96,6 +100,7 @@ async function nginx() {
 }
 
 async function searchInterface() {
+	console.log('searchInterface');
 	const html = `
 	<!DOCTYPE html>
 	<html>
@@ -413,6 +418,7 @@ async function searchInterface() {
 
 export default {
 	async fetch(request, env, ctx) {
+		console.log('default async fetch');
 		const getReqHeader = (key) => request.headers.get(key); // 获取请求头
 
 		let url = new URL(request.url); // 解析请求URL
@@ -650,6 +656,7 @@ export default {
  * @param {string} baseHost 基地址
  */
 function httpHandler(req, pathname, baseHost) {
+	console.log('httpHandler');
 	const reqHdrRaw = req.headers;
 
 	// 处理预检请求
@@ -688,6 +695,7 @@ function httpHandler(req, pathname, baseHost) {
  * @param {string} rawLen 原始长度
  */
 async function proxy(urlObj, reqInit, rawLen) {
+	console.log('proxy');
 	const res = await fetch(urlObj.href, reqInit);
 	const resHdrOld = res.headers;
 	const resHdrNew = new Headers(resHdrOld);
@@ -721,6 +729,7 @@ async function proxy(urlObj, reqInit, rawLen) {
 }
 
 async function ADD(envadd) {
+	console.log('ADD');
 	var addtext = envadd.replace(/[	 |"'\r\n]+/g, ',').replace(/,+/g, ',');	// 将空格、双引号、单引号和换行符替换为逗号
 	if (addtext.charAt(0) == ',') addtext = addtext.slice(1);
 	if (addtext.charAt(addtext.length - 1) == ',') addtext = addtext.slice(0, addtext.length - 1);
